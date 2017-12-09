@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<?php
+$empresa = $this->getEmpresa();
+extract($empresa); ?>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <?=$this->partials('operacional/seo',[$empresa]);?>
+        <?=$this->partials('operacional/stylesheet',[$empresa]);?>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+
+            <!-- Main Header -->
+            <?= $this->partials("main-header"); ?>
+
+            <!-- Left side column. contains the logo and sidebar -->
+            <?= $this->partials("sidebar"); ?>
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <!-- Main content -->
+                <section class="content container-fluid">
+
+                    <!--------------------------
+                    | Your Page Content Here |
+                    -------------------------->
+                    <?= $this->content(); ?>
+
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+            <!-- Main Footer -->
+            <footer class="main-footer">
+                <!-- To the right -->
+                <div class="pull-right hidden-xs">
+                    Tudo o que quiser
+                </div>
+                <!-- Default to the left -->
+                <strong>Copyright &copy; 2014-<?=date("Y")?> <a href="<?= $this->getUrl() ?>">SIGA-Smart</a>.</strong> Todos os direitos reservados.
+            </footer>
+            <!-- Control Sidebar -->
+            <?= $this->partials("control-sidebar"); ?>
+        </div>
+        <div class="body-processing">
+            <div class="processing">
+            </div>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- REQUIRED JS SCRIPTS -->
+        <!-- Bootstrap 3.3.7 -->
+        <?=$this->partials('operacional/script',[]);?>
+        <script src="<?= $this->getUrl('dist/js/demo.js') ?>"></script>
+
+        <!-- Optionally, you can add Slimscroll and FastClick plugins.
+             Both of these plugins are recommended to enhance the
+             user experience. -->
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<?php
+$empresa = $this->getEmpresa();?>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <?=$this->partials('operacional/seo',[$empresa]);?>
+        <?=$this->partials('operacional/stylesheet',[$empresa]);?>
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <!-- Main Header -->
+            <?= $this->partials("main-header-top"); ?>
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <div class="container">
+                    <?= $this->content(); ?>
+                    <!-- /.content -->
+                </div>
+                <!-- /.container -->
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <!-- To the right -->
+                <div class="pull-right hidden-xs">
+                    Tudo o que quiser
+                </div>
+                <!-- Default to the left -->
+                <strong>Copyright &copy; 2014-<?=date("Y")?> <a href="<?= $this->getUrl() ?>">SIGA-Smart</a>.</strong> Todos os direitos reservados.
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+        <div class="body-processing">
+            <div class="processing">
+            </div>
+        </div>
+        <!-- Control Sidebar -->
+        <?= $this->partials("control-sidebar-top"); ?>
+        <!-- ./wrapper -->
+        <!-- REQUIRED JS SCRIPTS -->
+        <!-- Bootstrap 3.3.7 -->
+        <?=$this->partials('operacional/script',[]);?>
+        <script src="<?= $this->getUrl('dist/js/demo_top.js') ?>"></script>
+    </body>
+</html>

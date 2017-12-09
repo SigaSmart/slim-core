@@ -1,0 +1,50 @@
+<div class="zf-table-wrap  form-inline">
+    <div class="table-header">
+    </div>
+    <div class="row-fluid ">
+        <div class="span6 pull-left">
+            <?php if($name): ?>
+                <header>
+                    <h4><?= $name ?></h4>
+                </header>
+            <?php endif;?>
+        </div>
+        <?php if ($showQuickSearch): ?>
+            <div class="dataTables_filter pull-right" id="dataTable_filter">
+                <label>Search: <input type="text" aria-controls="dataTable" class="quick-search" value="<?php echo $quickSearch ?>">
+                </label>
+            </div>
+        <?php endif; ?>
+    </div>
+    <?php echo $table; ?>
+    <div class="row-fluid">
+        <div class="span6">
+            <?php if ($showItemPerPage): ?>
+                <div class="dataTables_length">
+                    <label class="pull-right">
+                        Show
+                        <select class="itemPerPage">
+                            <?php foreach ($itemCountPerPageValues as $item): ?>
+                                <?php $selected = ($item == $itemCountPerPage) ? 'selected="selected"' : '""'; ?>
+                                <option <?php echo $selected ?>><?php echo $item ?></option>
+                            <?php endforeach; ?>
+                        </select> 
+                    </label> 
+                </div>
+            <?php endif; ?>
+            <?php if($showExportToCSV): ?>
+                <a href="#" style="margin-left: 10px;" class="export-csv">Export to CSV</a>
+           <?php endif;?>
+        </div>
+        <div class="span6">
+            <?php if ($showPagination): ?>
+                <div class="dataTables_paginate paging_bootstrap pagination">
+                    <?php echo $paginator; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="processing">
+        </div>
+    </div>
+    <?php echo $paramsWrap; ?>
+</div>

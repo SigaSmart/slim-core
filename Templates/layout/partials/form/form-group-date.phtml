@@ -1,0 +1,18 @@
+<?php
+$name = $field->getName();
+if ($name === null || $name === '') {
+    throw new \Exception(sprintf(
+            '%s requires that the element has an assigned name; none discovered', __METHOD__
+    ));
+}
+$attributes = $field->getAttributes();
+$attributes['name'] = $name;
+$attributes['type'] = $field->getType();
+if (isset($attributes['value'])):
+    $attributes['value'] = date("d/m/Y", strtotime($attributes['value']));
+endif;
+?>
+<div class="form-group">
+  <label for="<?= $field->getId() ?>"><?= $field->getLabel() ?></label>
+  <?=sprintf('<input %s>', $this->formRow->createAttributesString($attributes)); ?>
+</div>

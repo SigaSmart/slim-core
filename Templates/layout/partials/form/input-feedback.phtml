@@ -1,0 +1,21 @@
+<?php
+$name = $field->getName();
+if ($name === null || $name === '') {
+    throw new \Exception(sprintf(
+            '%s requires that the element has an assigned name; none discovered', __METHOD__
+    ));
+}
+$attributes = $field->getAttributes();
+$attributes['name'] = $name;
+$attributes['type'] = $field->getType();
+if (isset($attributes['value'])):
+    $attributes['value'] = $attributes['value'];
+    if ('password' == $attributes['type']) {
+        $attributes['value'] = '';
+    }
+endif;
+?>
+<div class="form-group has-feedback">
+ <?=sprintf('<input %s>', $this->formRow->createAttributesString($attributes)); ?>
+  <span class="glyphicon glyphicon-<?=$icon?> form-control-feedback"></span>
+</div>

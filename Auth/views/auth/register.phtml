@@ -1,0 +1,31 @@
+<div class="login-box">
+    <div class="login-logo">
+        <a href=""><b>PASSO-02</b> CADASTRAR USUÁRIO</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body border-left">
+        <p class="login-box-msg">Cadastre um usuário para sua empresa</p>
+        <?= $this->form->openTag($form->removeAttr('class')); ?>
+        <?= $this->partials('form/hidden', ['field' => $form->get('empresa')->setAttribute('value',$data['id']), 'icon' => 'user']) ?>
+        <?= $this->partials('form/input-feedback', ['field' => $form->get('first_name'), 'icon' => 'user']) ?>
+        <?= $this->partials('form/input-feedback', ['field' => $form->get('last_name'), 'icon' => 'user']) ?>
+        <?= $this->partials('form/input-feedback', ['field' => $form->get('email')->removeAttr('readonly'), 'icon' => 'envelope']) ?>
+        <?= $this->partials('form/input-feedback', ['field' => $form->get('password'), 'icon' => 'lock']) ?>
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-xs-12">
+                 <button type="submit" class="btn btn-warning btn-block btn-flat btn-block">Cadastrar Usuário</button>
+            </div>
+            <!-- /.col -->
+        </div>
+        <?= $this->form->closeTag(); ?>
+        <!-- /.social-auth-links -->
+         <div class="social-auth-links text-center">
+      <p>- OR -</p>
+       <!-- /.social-auth-links -->
+          <a href="<?=$this->route->pathFor('login')?>" class="text-center">Voltar Para O Login?</a>
+       </div>
+
+    </div>
+    <!-- /.login-box-body -->
+</div>

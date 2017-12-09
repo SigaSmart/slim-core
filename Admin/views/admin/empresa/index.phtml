@@ -1,0 +1,14 @@
+  <!-- Content Header (Page header) -->
+    <?= $this->partials("top-navigation",[
+        'a'=>"Admin",'b'=>"Empresas",'c'=>"Listar", "d"=>'empresa']); ?>
+      <!-- Main content -->
+      <section class="content">
+      	<div id="tableContainer">
+
+</div>
+<script>
+    $(function () {
+        $("#tableContainer").zfTable('<?= $this->route->pathFor('api.empresa') ?>');
+    })
+</script>
+</section>

@@ -1,0 +1,29 @@
+<div class="login-box">
+    <div class="login-logo">
+        <a href=""><b>PASSO-01</b> CADASTRAR EMPRESA</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body border-left">
+        <p class="login-box-msg">Cadastrar Informações da Sua Empresa</p>
+        <?= $this->form->openTag($form->removeAttr('class')); ?>
+        <?= $this->partials('form/input-feedback', ['field' => $form->get('social'), 'icon' => 'home']) ?>
+        <?= $this->partials('form/input-feedback', ['field' => $form->get('fantasia'), 'icon' => 'tower']) ?>
+        <?= $this->partials('form/input-feedback', ['field' => $form->get('email'), 'icon' => 'envelope']) ?>
+        <?= $this->partials('form/input-feedback', ['field' => $form->get('phone'), 'icon' => 'phone-alt']) ?>
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-primary btn-block btn-flat btn-block">Cadastrar Empresa</button>
+            </div>
+            <!-- /.col -->
+        </div>
+        <?= $this->form->closeTag(); ?>
+        <div class="social-auth-links text-center">
+      <p>- OR -</p>
+       <!-- /.social-auth-links -->
+          <a href="<?=$this->route->pathFor('login')?>" class="text-center">Voltar Para O Login?</a>
+       </div>
+       
+    </div>
+    <!-- /.login-box-body -->
+</div>

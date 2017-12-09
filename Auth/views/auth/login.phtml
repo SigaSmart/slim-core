@@ -1,0 +1,29 @@
+<div class="login-box">
+  <div class="login-logo">
+    <a href=""><b>Admin</b>LTE</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Iniciar nova sessão</p>
+     <?= $this->form->openTag($form->removeAttr('class')); ?>
+      <?= $this->partials('form/input-feedback', ['field' => $form->get('email')->removeAttr('readonly'),'icon'=>'envelope']) ?>
+       <?= $this->partials('form/input-feedback', ['field' => $form->get('password'),'icon'=>'lock']) ?>
+       <div class="row">
+        <!-- /.col -->
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success btn-block btn-flat btn-block">Iniciar Sessão</button>
+        </div>
+        <!-- /.col -->
+      </div>
+     <?= $this->form->closeTag(); ?>
+    <!-- /.social-auth-links -->
+     <div class="social-auth-links text-center">
+      <p>- OR -</p>
+       <!-- /.social-auth-links -->
+           <a href="<?=$this->route->pathFor('usuario.empresa')?>" class="text-center">Cadastrar Empresa</a>
+       </div>
+  
+
+  </div>
+  <!-- /.login-box-body -->
+</div>

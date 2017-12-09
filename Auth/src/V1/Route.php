@@ -1,0 +1,64 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+namespace SIGA\Auth\V1;
+
+use SIGA\Auth\V1\Controllers;
+use SIGA\Core\RouteAbstract;
+
+/**
+ * Description of Route
+ *
+ * @author caltj
+ */
+class Route extends RouteAbstract {
+
+    //put your code here
+    public function create() {
+
+        $this->app->group('/admin', function () {
+
+            $this->group('/usuario', function () {
+
+                $this->map(['GET', 'POST'], '/login', sprintf('%s:login', Controllers\AuthController::class))->setName('login');
+
+                $this->map(['GET', 'POST'], '/{id}/register', sprintf('%s:register', Controllers\AuthController::class))->setName('register');
+
+                $this->map(['GET', 'POST'], '/empresa', sprintf('%s:empresa', Controllers\EmpresaController::class))->setName('usuario.empresa');
+
+                $this->map(['GET', 'POST'], '/forgot', sprintf('%s:forgot', Controllers\AuthController::class))->setName('forgot');
+            });
+        })->add($this->app->getContainer()->get('GuestMiddleware'));
+
+        $this->app->group('/admin', function () {
+
+            $this->get('/usuario', sprintf('%s:index', Controllers\UsuarioController::class))->setName('usuario');
+
+            $this->get('/usuario/{id}/edit', sprintf('%s:edit', Controllers\UsuarioController::class))->setName('usuario.edit');
+
+            $this->post('/usuario/store', sprintf('%s:store', Controllers\UsuarioController::class))->setName('usuario.store');
+
+            $this->post('/usuario/create', sprintf('%s:create', Controllers\UsuarioController::class))->setName('usuario.create');
+
+            $this->post('/usuario/password', sprintf('%s:password', Controllers\UsuarioController::class))->setName('usuario.password');
+
+            $this->get("/usuario/logout", sprintf("%s:logout", Controllers\AuthController::class))->setName('usuario.logout');
+
+            $this->map(['GET', 'POST'], "/usuario/profile", sprintf("%s:profile", Controllers\UsuarioController::class))->setName('usuario.profile');
+        })->add($this->app->getContainer()->get('AuthMiddleware'));
+
+        $this->app->group('/api', function () {
+            $this->map(['POST', 'GET'], "/usuario", sprintf("%s:listar", Api\Controllers\UsuarioController::class))->setName('api.usuario');
+            $this->group('/usuario', function () {
+                $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\UsuarioController::class))->setName('usuario.state');
+                $this->post("/delete", sprintf("%s:delete", Api\Controllers\UsuarioController::class))->setName('usuario.delete');
+            });
+        })->add($this->app->getContainer()->get('AuthMiddleware'));
+    }
+
+}
