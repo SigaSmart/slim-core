@@ -100,7 +100,7 @@ class AbstractForm {
 
     public function dbValueOptions($table, $colunas = ["id", 'name'], $where = " AND status = ?", $values = [1]) {
         if (!empty($where) && $values):
-            $values = array_merge($values, [$this->options['empresa']]);
+            $values = array_merge([$this->options['empresa']], $values);
             $statement = $this->adapter->query(sprintf('SELECT %s FROM %s WHERE empresa = ? %s', implode(", ", $colunas), $table, $where), $values);
         else:
             $statement = $this->adapter->query(sprintf('SELECT %s FROM %s WHERE empresa = ?', implode(", ", $colunas), $table), [$this->options['empresa']]);
