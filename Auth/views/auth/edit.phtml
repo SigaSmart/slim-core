@@ -22,6 +22,11 @@
                         <?= $this->partials('form/input', ['field' => $form->get('last_name')]) ?>
                         <?= $this->partials('form/input', ['field' => $form->get('email')]) ?>
                         <?= $this->partials('form/input', ['field' => $form->get('password')]) ?>
+                        <?php if($user['role']=="admin"):?>
+                        <?= $this->partials('form/select', ['field' => $form->get('role')]) ?>
+                    <?php else:?>
+                        <?= $this->partials('form/hidden', ['field' => $form->get('role')]) ?>
+                    <?php endif;?>
                         <?= $this->partials('form/input', ['field' => $form->get('created_at')]) ?>
                         <?= $this->partials('form/input', ['field' => $form->get('updated_at')]) ?>
                     </div>

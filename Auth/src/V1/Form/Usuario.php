@@ -67,6 +67,33 @@ class Usuario extends AbstractForm {
                 'placeholder' => "E-Mail:"
             ],
         ]);
+        
+        if($this->options['user']['role']=="admin"):
+              //*********************** role **************************//
+               $this->add([
+                        'type' => \SIGA\Core\Form\Fields\Select::class,
+                        'name' => 'role',
+                        'options' => [
+                            'label' => "Nivel de acesso:",
+                            'empty' => "--Selecione--",
+                            //table: Nome da tabela
+                            //Colunas no formato de array ex: ['id' => 'name'] (opcional)
+                            //Condição AND ou OR status = ? AND ou OR name = ?
+                            //Os value conforme os parametros passsados na condição array [1, 'claudio']
+                            'value_options'=> $this->dbValueOptions('roles', ['alias','name'])
+                        ],
+                        'attributes' => [
+                            'class' => 'form-control'
+                        ],
+                    ]);
+        else:
+          //*********************** role **************************//
+          $this->add([
+                    'name' => 'role',
+                    'type' => \SIGA\Core\Form\Fields\Hidden::class
+                ]);
+
+        endif; 
         $this->add([
             'type' => \SIGA\Core\Form\Fields\Password::class,
             'name' => 'password',

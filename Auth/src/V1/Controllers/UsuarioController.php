@@ -37,6 +37,7 @@ class UsuarioController extends ControllerAbstract {
         $this->getModel();
         $this->getForm("ajaxForm", [
             'action' => $this->router->pathFor('usuario.store'),
+            'user' => $this->user,
         ]);
         return $this->view->render($resp, sprintf("%s/auth/profile", $this->TemplatePath, $this->template), [
                     'data' => $this->Data,

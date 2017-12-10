@@ -35,6 +35,10 @@ class AbstractForm {
     public function __construct($name = "AjaxForm", array $options = []) {
 
         $this->setAttribute('name', $name);
+        if(isset($options['adapter'])):
+            $this->setAdapter($options['adapter']);
+        endif;
+
         $this->options = $options;
         $this->add([
             'name' => 'id',

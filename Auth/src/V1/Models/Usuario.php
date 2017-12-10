@@ -139,35 +139,6 @@ class Usuario extends \SIGA\Core\ModelAbstract {
                 ],
             ]);
 
-            $this->inputFilter->add([
-                'name' => 'password',
-                'required' => true,
-                'filters' => [
-                    [
-                        'name' => \Zend\Filter\StringTrim::class,
-                    ],
-                ],
-                'validators' => [
-                    [
-                        'name' => \Zend\Validator\StringLength::class,
-                        'options' => [
-                            'max' => 10,
-                            'min' => 6,
-                            'messages' => [
-                                \Zend\Validator\StringLength::TOO_SHORT => "A Semha deve ter no minimo 5 caracteres!",
-                                \Zend\Validator\StringLength::TOO_LONG => "A Semha deve ter no maximo 10 caracteres!",
-                            ],
-                        ],
-                    ],
-                    [
-                        'name' => \Zend\Validator\NotEmpty::class,
-                        'options' => [
-                            'messages' => [\Zend\Validator\NotEmpty::IS_EMPTY => "Campo Obrigatorio"],
-                        ],
-                    ],
-                ],
-            ]);
-
         endif;
         return parent::getInputFilter();
     }
