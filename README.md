@@ -32,9 +32,14 @@ No arquivo Route criar uma rota
  ```
  
 No controller crie uma rota
-
+se não  tiver chame os use
 ```
-public function modal(Resq $request, Resp $response , $arsg=[])
+use Psr\Http\Message\RequestInterface as Req;
+use Psr\Http\Message\ResponseInterface as Resp;
+```
+```
+adciona essa função
+public function modal(Req $request, Resp $response , $arsg=[])
 	{
          $this->view->setTerminal(false);
          return $this->view->render($response, sprintf("%s/%s/modal", $this->TemplatePath, $this->template), [
