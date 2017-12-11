@@ -50,7 +50,18 @@ class Route extends RouteAbstract {
             $this->get("/usuario/logout", sprintf("%s:logout", Controllers\AuthController::class))->setName('usuario.logout');
 
             $this->map(['GET', 'POST'], "/usuario/profile", sprintf("%s:profile", Controllers\UsuarioController::class))->setName('usuario.profile');
+            
+               $this->group('/role', function () {
+                    $this->get("[/]", sprintf("%s:index", Controllers\RoleController::class))->setName('role');
+                    $this->get("/{id}/edit", sprintf("%s:edit", Controllers\RoleController::class))->setName('role.edit');
+                    $this->post("/create", sprintf("%s:create", Controllers\RoleController::class))->setName('role.create');
+                    $this->post("/store", sprintf("%s:store", Controllers\RoleController::class))->setName('role.store');
+                });
+
         })->add($this->app->getContainer()->get('AuthMiddleware'));
+
+
+
 
         $this->app->group('/api', function () {
             $this->map(['POST', 'GET'], "/usuario", sprintf("%s:listar", Api\Controllers\UsuarioController::class))->setName('api.usuario');
@@ -58,6 +69,13 @@ class Route extends RouteAbstract {
                 $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\UsuarioController::class))->setName('usuario.state');
                 $this->post("/delete", sprintf("%s:delete", Api\Controllers\UsuarioController::class))->setName('usuario.delete');
             });
+
+        $this->map(['POST', 'GET'], "/role", sprintf("%s:listar", Api\Controllers\RoleController::class))->setName('api.role');
+            $this->group('/role', function () {
+                $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\RoleController::class))->setName('role.state');
+                $this->post("/delete", sprintf("%s:delete", Api\Controllers\RoleController::class))->setName('role.delete');
+            });
+            
         })->add($this->app->getContainer()->get('AuthMiddleware'));
     }
 

@@ -1,0 +1,13 @@
+  
+<!-- Content Header (Page header) -->
+    <?= $this->partials("top-navigation",[
+        'a'=>"Admin",'b'=>"Nivel De Acesso",'c'=>"Listar", "d"=>'role']); ?>
+      <!-- Main content -->
+      <section class="content">
+      	<div id="tableContainer"></div>
+<script>
+    $(function () {
+        $("#tableContainer").zfTable('<?= $this->route->pathFor('api.role') ?>');
+    })
+</script>
+</section>
