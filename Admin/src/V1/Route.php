@@ -25,6 +25,8 @@ class Route extends RouteAbstract {
         $this->app->group('/admin', function () {
             $this->get("[/]", sprintf("%s:index", Controllers\AdminController::class))->setName('admin');
             $this->get("/setlayout", sprintf("%s:setlayout", Controllers\AdminController::class))->setName('settlayout');
+           $this->get("/modal", sprintf("%s:modal", Controllers\AdminController::class))->setName('modal');
+           
             $this->group('/cidade', function () {
                 $this->get("[/]", sprintf("%s:index", Controllers\CidadeController::class))->setName('cidade');
                 $this->post("/create", sprintf("%s:create", Controllers\CidadeController::class))->setName('cidade.create');
