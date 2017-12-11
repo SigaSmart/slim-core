@@ -1,0 +1,54 @@
+<!-- Content Header (Page header) -->
+<?=
+$this->partials("top-navigation", [
+    'a' => "Admin", 'b' => "Tema", 'c' => "Editar", "d" => 'menutheme']);
+?>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+    <div class="col-md-12">
+        <!-- Custom Tabs (Pulled to the right) -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab-1" data-toggle="tab">Tema</a></li>
+                <li class="pull-right header"><i class="fa fa-th"></i> Manutenção do Tema</li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-1">
+                    <?= $this->form->openTag($form); ?>
+                    <div class="col-md-12">
+                         <?= $this->form->openTag($form); ?>
+                        <?= $this->partials('form/hidden', ['field' => $form->get('id')]) ?>
+                        <?= $this->partials('form/input', ['field' => $form->get('name')]) ?>
+                        <?= $this->partials('form/input', ['field' => $form->get('alias')]) ?>
+
+                        <?= $this->partials('form/input', ['field' => $form->get('created_at')]) ?>
+                        <?= $this->partials('form/input', ['field' => $form->get('updated_at')]) ?>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-6">
+                            <?=
+                            $this->partials('form/button', [
+                                'value' => 'Atualizar Dados Do Tema',
+                                'type' => 'submit',
+                                'class' => 'btn btn-primary btn-block btn-flat'
+                            ])
+                            ?>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href=" <?= $this->route->pathFor('menutheme'); ?>" class="btn btn-danger btn-block btn-flat"><i class="fa fa-reply-all"></i> Voltar</a>
+                        </div>
+                    </div>
+                    <?= $this->form->closeTag(); ?>
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- /.tab-pane -->
+             </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>
+</section>

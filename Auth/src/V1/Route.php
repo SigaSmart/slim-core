@@ -58,6 +58,20 @@ class Route extends RouteAbstract {
                     $this->post("/store", sprintf("%s:store", Controllers\RoleController::class))->setName('role.store');
                 });
 
+                  $this->group('/menu', function () {
+                       $this->get("[/]", sprintf("%s:index", Controllers\MenuController::class))->setName('menu');
+                       $this->get("/{id}/edit", sprintf("%s:edit", Controllers\MenuController::class))->setName('menu.edit');
+                       $this->post("/create", sprintf("%s:create", Controllers\MenuController::class))->setName('menu.create');
+                       $this->post("/store", sprintf("%s:store", Controllers\MenuController::class))->setName('menu.store');
+                   });
+
+                     $this->group('/menutheme', function () {
+                          $this->get("[/]", sprintf("%s:index", Controllers\MenuthemeController::class))->setName('menutheme');
+                          $this->get("/{id}/edit", sprintf("%s:edit", Controllers\MenuthemeController::class))->setName('menutheme.edit');
+                          $this->post("/create", sprintf("%s:create", Controllers\MenuthemeController::class))->setName('menutheme.create');
+                          $this->post("/store", sprintf("%s:store", Controllers\MenuthemeController::class))->setName('menutheme.store');
+                      });
+
         })->add($this->app->getContainer()->get('AuthMiddleware'));
 
 
@@ -75,6 +89,17 @@ class Route extends RouteAbstract {
                 $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\RoleController::class))->setName('role.state');
                 $this->post("/delete", sprintf("%s:delete", Api\Controllers\RoleController::class))->setName('role.delete');
             });
+
+            $this->map(['POST', 'GET'], "/menu", sprintf("%s:listar", Api\Controllers\MenuController::class))->setName('api.menu');
+                        $this->group('/menu', function () {
+                            $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\MenuController::class))->setName('menu.state');
+                            $this->post("/delete", sprintf("%s:delete", Api\Controllers\MenuController::class))->setName('menu.delete');
+                        });
+            $this->map(['POST', 'GET'], "/menutheme", sprintf("%s:listar", Api\Controllers\MenuthemeController::class))->setName('api.menutheme');
+                        $this->group('/menutheme', function () {
+                            $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\MenuthemeController::class))->setName('menutheme.state');
+                            $this->post("/delete", sprintf("%s:delete", Api\Controllers\MenuthemeController::class))->setName('menutheme.delete');
+                        });
             
         })->add($this->app->getContainer()->get('AuthMiddleware'));
     }
