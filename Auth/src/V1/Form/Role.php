@@ -44,8 +44,7 @@ class Role extends \SIGA\Core\Form\AbstractForm {
                             ],
                             'attributes' => [
                                 'class' => 'form-control',
-                                'placeholder' => 'Alias:',
-                                'readonly'=>true
+                                'placeholder' => 'Alias:'
                             ]
                         ]);
         

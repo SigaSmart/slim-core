@@ -25,17 +25,17 @@ class RoleTable extends TablesAbstract {
         $mode->offsetSet('created_at', date("Y-m-d H:i:s"));
         $mode->offsetSet('updated_at', date("Y-m-d H:i:s"));
         //Descomentar se ouver url amigavel
-        $mode->offsetSet('alias', $this->slugExists('alias', $mode->offsetGet("name"), $mode->offsetGet("id")));
+       // $mode->offsetSet('alias', $this->slugExists('alias', $mode->offsetGet("name"), $mode->offsetGet("id")));
         return parent::insert($mode);
     }
 
     public function save(ModelAbstract $mode) {
         $mode->offsetSet('updated_at', date("Y-m-d H:i:s"));
         //Descomentar se ouver url amigavel
-        $mode->offsetSet('alias', $this->slugExists('alias', $mode->offsetGet("name"), $mode->offsetGet("id")));
-        $this->Result['inputs'] = [
-            'alias' => $mode->offsetGet('alias')
-        ];
+        //$mode->offsetSet('alias', $this->slugExists('alias', $mode->offsetGet("name"), $mode->offsetGet("id")));
+       // $this->Result['inputs'] = [
+      //      'alias' => $mode->offsetGet('alias')
+      //  ];
         return parent::save($mode);
     }
 
