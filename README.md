@@ -2,7 +2,7 @@ Core do sistema siga com slim framework
 
 
 criando uma modal
-
+Função java script
 ```
 var $btn_modal_ajax = $(".btn-moldal-ajax");
      $btn_modal_ajax.click(function (evt) {
