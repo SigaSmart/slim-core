@@ -55,7 +55,6 @@ class MenuHelper extends TablesAbstract
                         if($SubMenus):
                             $Menus[$key]['pages']= $SubMenus;
                         endif;
-                        return $Menus;
                     endif;
                 endforeach;
                 return $Menus;
