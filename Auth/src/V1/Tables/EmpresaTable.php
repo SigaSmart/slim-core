@@ -23,12 +23,28 @@ class EmpresaTable extends TablesAbstract {
 	public function insert(ModelAbstract $mode) {
 		$mode->offsetSet('created_at', date("Y-m-d H:i:s"));
 		$mode->offsetSet('updated_at', date("Y-m-d H:i:s"));
+		$Result = $this->Result;
 		parent::insert($mode);
                 if($this->Result['result']):
                     $mode->offsetSet('id', $this->Result['result']);
                     $mode->offsetSet('empresa', $this->Result['result']);
-                    return parent::save($mode);
+                    $Result =  parent::save($mode);
+                    if($Result['result']):
+                        $this->table = 'roles';
+                        $mode->offsetUnset('id');
+                        $mode->offsetUnset('social');
+                        $mode->offsetUnset('fantasia');
+                        $mode->offsetUnset('email');
+                        $mode->offsetUnset('phone');
+                        $mode->offsetSet('empresa', $this->Result['result']);
+                        $mode->offsetSet('name', "Admin");
+                        $mode->offsetSet('alias', "admin");
+                        $mode->offsetSet('status', "1");
+                        parent::save($mode);
+                    endif;
                 endif;
+
+                return $Result;
 	}
 
 }

@@ -68,7 +68,7 @@ class Usuario extends AbstractForm {
             ],
         ]);
         
-        if($this->options['user']['role']=="admin"):
+        if(isset($this->options['user']) && isset($this->options['user']['role']) && $this->options['user']['role']=="admin"):
               //*********************** role **************************//
                $this->add([
                         'type' => \SIGA\Core\Form\Fields\Select::class,
@@ -88,12 +88,33 @@ class Usuario extends AbstractForm {
                     ]);
         else:
           //*********************** role **************************//
-          $this->add([
-                    'name' => 'role',
-                    'type' => \SIGA\Core\Form\Fields\Hidden::class
-                ]);
+        $this->add([
+            'name' => 'role',
+            'type' => \SIGA\Core\Form\Fields\Hidden::class
+        ]);
 
-        endif; 
+        endif;
+
+        if(isset($this->options['user']) && isset($this->options['user']['role']) && $this->options['user']['role']=="admin"):
+            //*********************** empresa **************************//
+                       $this->add([
+                                'type' => \SIGA\Core\Form\Fields\Select::class,
+                                'name' => 'empresa',
+                                'options' => [
+                                    'label' => "Selecione uma empresa:",
+                                    'empty' => "--Selecione--",
+                                    //table: Nome da tabela
+                                    //Colunas no formato de array ex: ['id' => 'name'] (opcional)
+                                    //Condição AND ou OR status = ? AND ou OR name = ?
+                                    //Os value conforme os parametros passsados na condição array [1, 'claudio']
+                                    'value_options'=> $this->dbValueOptions('empresa', ['id','social'])
+                                ],
+                                'attributes' => [
+                                    'class' => 'form-control'
+                                ],
+                            ]);
+                endif; 
+
         $this->add([
             'type' => \SIGA\Core\Form\Fields\Password::class,
             'name' => 'password',

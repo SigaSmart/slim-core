@@ -9,7 +9,6 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab_1-1" data-toggle="tab">Geral</a></li>
-                <li><a href="#address" data-toggle="tab">Endereço</a></li>
                 <li class="pull-right header"><i class="fa fa-th"></i> Manutenção do usuario</li>
             </ul>
             <div class="tab-content">
@@ -23,6 +22,9 @@
                         <?= $this->partials('form/input', ['field' => $form->get('email')]) ?>
                         <?= $this->partials('form/input', ['field' => $form->get('password')]) ?>
                         <?php if($user['role']=="admin"):?>
+                        <?= $this->partials('form/select', ['field' => $form->get('empresa')]) ?>
+                      <?php endif;?>
+                     <?php if($user['role']=="admin"):?>
                         <?= $this->partials('form/select', ['field' => $form->get('role')]) ?>
                     <?php else:?>
                         <?= $this->partials('form/hidden', ['field' => $form->get('role')]) ?>
@@ -56,10 +58,6 @@
                     <?= $this->form->closeTag(); ?>
                     <div class="clearfix"></div>
 
-                </div>
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="address">
-                   endereço
                 </div>
                 <!-- /.tab-pane -->
             </div>

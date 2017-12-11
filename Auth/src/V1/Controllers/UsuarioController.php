@@ -30,9 +30,6 @@ class UsuarioController extends ControllerAbstract {
     protected $route = 'usuario';
 
     public function profile(Resq $req, Resp $resp) {
-        if ($req->isPost()):
-            return parent::store($req, $resp);
-        endif;
         $this->Data = $this->auth->user();
         $this->getModel();
         $this->getForm("ajaxForm", [
