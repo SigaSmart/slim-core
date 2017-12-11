@@ -3,7 +3,7 @@ Core do sistema siga com slim framework
 
 criando uma modal
 
-´´´´
+```
 var $btn_modal_ajax = $(".btn-moldal-ajax");
      $btn_modal_ajax.click(function (evt) {
         var $this = $(this);
@@ -25,4 +25,10 @@ var $btn_modal_ajax = $(".btn-moldal-ajax");
         })
         return false;
     });
-    ´´´´
+```
+No arquivo Route criar uma rota 
+``
+ $this->get("/modal", sprintf("%s:modal", Controllers\AdminController::class))->setName('modal');
+ ``
+ 
+No controller crie uma rota
