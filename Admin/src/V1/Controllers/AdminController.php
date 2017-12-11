@@ -35,12 +35,5 @@ public function setlayout(Resq $request, Resp $response , $arsg=[]){
     return $response->withRedirect($this->router->pathFor('admin'));
 }
 
-	public function modal(Resq $request, Resp $response , $arsg=[])
-	{
-		 $this->view->setTerminal(false);
-		 return $this->view->render($response, sprintf("%s/%s/modal", $this->TemplatePath, $this->template), [
-	            'data' => ""
-	        ]);
-	}
 
 }
