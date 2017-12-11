@@ -61,10 +61,10 @@ class Menu extends \SIGA\Core\Form\AbstractForm {
                                    'label' => "Tema:",
                                    'empty' => "--Selecione--",
                                    //table: Nome da tabela
-                                   //Colunas no formato de array ex: ['id' => 'name'] (opcional)
+                                   //Colunas no formato de array ex: ['id' , 'name'] (opcional)
                                    //Condição AND ou OR status = ? AND ou OR name = ?
                                    //Os value conforme os parametros passsados na condição array [1, 'claudio']
-                                   'value_options'=> $this->dbValueOptions('menu_theme')
+                                   'value_options'=> $this->dbValueOptions('menu_theme',['alias' , 'name'])
                                ],
                                'attributes' => [
                                    'class' => 'form-control'
@@ -127,6 +127,24 @@ class Menu extends \SIGA\Core\Form\AbstractForm {
                       		   		                'placeholder' => 'Dica de tela:'
                       		   		            ]
                       		   		        ]);
+
+                      		   		          //*********************** ordem **************************//
+                      		   		           $this->add([
+                      		   		                    'type' => \SIGA\Core\Form\Fields\Select::class,
+                      		   		                    'name' => 'ordem',
+                      		   		                    'options' => [
+                      		   		                        'label' => "Ordem:",
+                      		   		                        'empty' => "--Selecione--",
+                      		   		                        //table: Nome da tabela
+                      		   		                        //Colunas no formato de array ex: ['id' => 'name'] (opcional)
+                      		   		                        //Condição AND ou OR status = ? AND ou OR name = ?
+                      		   		                        //Os value conforme os parametros passsados na condição array [1, 'claudio']
+                      		   		                        'value_options'=> $this->dbValueOptions('menus')
+                      		   		                    ],
+                      		   		                    'attributes' => [
+                      		   		                        'class' => 'form-control'
+                      		   		                    ],
+                      		   		                ]);
         
     }
 

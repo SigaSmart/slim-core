@@ -59,7 +59,6 @@ class ControllerAbstract {
     }
 
     public function index(Resq $req, Resp $resp) {
-
         return $this->view->render($resp, sprintf("%s/%s/index", $this->TemplatePath, $this->template), [
             'data' => $this->Data,
         ]);

@@ -83,7 +83,7 @@ class Views extends Helper\ViewsHelper {
     /**
      * @return \Slim\Container
      */
-    public function getC(): \Slim\Container
+    public function getC()
     {
         return $this->c;
     }
@@ -193,7 +193,7 @@ class Views extends Helper\ViewsHelper {
      */
     public function fetch($template, array $data = []) {
         if (!is_file(sprintf("%s/%s.phtml", $this->templatePath, $template))) {
-            throw new \RuntimeException("View cannot render `$template` because the template does not exist");
+            throw new \RuntimeException("View `$template` não pode ser acessada ela não existe");
         }
         $this->dataObj = array_merge($data, $this->Authenticate);
         $this->dataObj['user'] = $this->auth->user();
