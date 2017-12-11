@@ -25,6 +25,8 @@ abstract class TablesAbstract extends Utils {
     protected $adapter;
     protected $Sql;
 
+    protected $join=[];
+
     /**
      *
      * @var \Zend\Db\Adapter\Driver\StatementInterface
@@ -62,33 +64,47 @@ abstract class TablesAbstract extends Utils {
         $this->adapter = $adapter;
     }
 
-    public function getSelect($where = [], $table = null, $colluns = ['*'],  $join = []) {
+    /**
+     * @param array $join
+     * @return TablesAbstract
+     */
+    public function setJoin(array $join)
+    {
+        $this->join = $join;
+        return $this;
+    }
+
+
+    public function getSelect($where = [], $table = null, $colluns = ['*']) {
         $this->Select = $this->Sql->select();
         if ($table):
             $this->table = $table;
         endif;
-        if ($join):
-            $this->Select->join($join['table'], // join table with alias
-                $join['where']  // join expression
+        if ($this->join):
+            $this->Select->join($this->join['table'], // join table with alias
+                $this->join['where']  // join expression
             );
         endif;
         $this->filtro($where);
         $this->Select->from($this->table)->columns($colluns);
         $this->Select->where($this->where);
         $this->Select->limit(1000);
-        //d($this->Select->getSqlString());
         return $this->Select;
     }
 
-    public function select($where = [], $table = null, $colluns = ['*'], $join = []) {
+    public function select($where = [], $table = null, $colluns = ['*']) {
         $this->Select = $this->Sql->select();
         if ($table):
             $this->table = $table;
         endif;
-        if ($join):
-            $this->Select->join($join['table'], // join table with alias
-                $join['where']  // join expression
-            );
+        if ($this->join):
+            foreach ($this->join as $key => $jon):
+                $this->Select->join([$key => $key],        // join table with alias
+                    sprintf('%s.%s = %s.%s',$this->table,$jon['key'],$key,$jon['parent']),  // join expression
+                    $jon['c'],
+                    $this->Select::JOIN_INNER
+                );
+            endforeach;
         endif;
         $this->filtro($where);
         $this->Select->from($this->table)->columns($colluns);
@@ -113,16 +129,20 @@ abstract class TablesAbstract extends Utils {
         return [];
     }
 
-    public function find(int $id, $colluns = ['*'], $join = []) {
+    public function find(int $id, $colluns = ['*']) {
         $this->Select = $this->Sql->select();
-        $this->Select->from(['a' => $this->table]);
-        if ($join):
-            $this->Select->join($join['table'], // join table with alias
-                $join['where']  // join expression
-            );
+        $this->Select->from([$this->table => $this->table]);
+        if ($this->join):
+            foreach ($this->join as $key => $jon):
+                $this->Select->join([$key => $key],        // join table with alias
+                    sprintf('%s.%s = %s.%s',$this->table,$jon['key'],$key,$jon['parent']),  // join expression
+                    $jon['c'],
+                    $this->Select::JOIN_INNER
+                );
+            endforeach;
         endif;
         $this->Select->columns($colluns);
-        $this->Select->where(["a.{$this->id}" => $id]);
+        $this->Select->where(["{$this->table}.{$this->id}" => $id]);
         $this->Stmt = $this->Sql->prepareStatementForSqlObject($this->Select);
         $this->exec();
         if ($this->resultSet->count()):
@@ -131,11 +151,8 @@ abstract class TablesAbstract extends Utils {
         return [];
     }
 
-    public function findBy(array $where, $colluns = ['*'], $table = null) {
+    public function findBy(array $where, $colluns = ['*']) {
         $this->Select = $this->Sql->select();
-        if ($table):
-            $this->table = $table;
-        endif;
         $this->Select->from($this->table);
         $this->Select->columns($colluns);
         $this->Select->where($where);
@@ -168,18 +185,8 @@ abstract class TablesAbstract extends Utils {
             unset($condicao['user']);
         }
         if ($this->Model instanceof ModelAbstract) {
-
             if ($this->Model->offsetExists("empresa")) {
-                if (is_array( $this->Model->offsetGet("empresa"))) {
-                    $this->where->in("{$this->table}.empresa",  $this->Model->offsetGet("empresa"));
-                }
-                else{
-                    if($this->table == "empresa"):
-                      $this->where->addPredicate(new Operator("{$this->table}.id", "=", $this->Model->offsetGet("empresa")));
-                    else:
-                        $this->where->addPredicate(new Operator("{$this->table}.empresa", "=", $this->Model->offsetGet("empresa")));
-                    endif;
-                }
+                $this->where->addPredicate(new Operator("{$this->table}.empresa", "=", $this->Model->offsetGet("empresa")));
             }
         }
 
@@ -310,6 +317,7 @@ abstract class TablesAbstract extends Utils {
         }
         return $this->Result;
     }
+
 
     protected function exec() {
         $this->resultSet = new \Zend\Db\ResultSet\ResultSet();
