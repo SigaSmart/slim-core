@@ -184,11 +184,21 @@ abstract class TablesAbstract extends Utils {
             $this->where->addPredicate(new Operator("{$this->table}.user", "=", $condicao['user']));
             unset($condicao['user']);
         }
-        if ($this->Model instanceof ModelAbstract) {
-            if ($this->Model->offsetExists("empresa")) {
-                $this->where->addPredicate(new Operator("{$this->table}.empresa", "=", $this->Model->offsetGet("empresa")));
-            }
-        }
+		if ($this->Model instanceof ModelAbstract) {
+
+			if ($this->Model->offsetExists("empresa")) {
+				if (is_array( $this->Model->offsetGet("empresa"))) {
+					$this->where->in("{$this->table}.empresa",  $this->Model->offsetGet("empresa"));
+				}
+				else{
+					if($this->table == "empresa"):
+						$this->where->addPredicate(new Operator("{$this->table}.id", "=", $this->Model->offsetGet("empresa")));
+					else:
+						$this->where->addPredicate(new Operator("{$this->table}.empresa", "=", $this->Model->offsetGet("empresa")));
+					endif;
+				}
+			}
+		}
 
         if (isset($condicao['status']) && $condicao['status'] >= 0) {
             // $operator=$condicao['state']>=0?"=":">";
