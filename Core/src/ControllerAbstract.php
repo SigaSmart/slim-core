@@ -214,6 +214,7 @@ class ControllerAbstract {
                 [
                     'adapter' => $this->getAdapter(),
                     'empresa' => isset($this->user['empresa'])? $this->user['empresa'] : "",
+                    'user' =>$this->user
                 ]);
             $this->form = (new \ReflectionClass($this->form))->newInstanceArgs([$name, $Options]);
             if ($this->Data):
