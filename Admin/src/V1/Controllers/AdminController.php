@@ -8,6 +8,7 @@
 
 namespace SIGA\Admin\V1\Controllers;
 
+use SIGA\Admin\V1\Form\Table;
 use SIGA\Core\ControllerAbstract;
 use Psr\Http\Message\RequestInterface as Resq;
 use Psr\Http\Message\ResponseInterface as Resp;
@@ -19,8 +20,8 @@ use Psr\Http\Message\ResponseInterface as Resp;
  */
 class AdminController extends ControllerAbstract {
 
-//    protected $TemplatePath = "Home/views";
-//    protected $template = 'home';
+//    protected $TemplatePath = "Admin/views";
+//    protected $template = 'admin/table';
 //    protected $defaultLayout = 'home';
 
 
@@ -34,6 +35,20 @@ public function setlayout(Resq $request, Resp $response , $arsg=[]){
     endif;
     return $response->withRedirect($this->router->pathFor('admin'));
 }
+
+    public function table(Resq $req, Resp $resp)
+    {
+        die;
+        $this->TemplatePath = "Admin/views";
+        $this->template = 'admin/table';
+        $this->form = Table::class;
+        $this->getForm("ajaxForm", [
+            'action' => $this->router->pathFor('api.table'),
+        ]);
+        return $this->view->render($resp, sprintf("%s/%s/table", $this->TemplatePath, $this->template), [
+            'form' => $this->form,
+        ]);
+    }
 
 
 }

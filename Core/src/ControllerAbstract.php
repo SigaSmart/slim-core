@@ -59,6 +59,7 @@ class ControllerAbstract {
     }
 
     public function index(Resq $req, Resp $resp) {
+
         return $this->view->render($resp, sprintf("%s/%s/index", $this->TemplatePath, $this->template), [
             'data' => $this->Data,
         ]);
@@ -115,6 +116,9 @@ class ControllerAbstract {
         return $this->notFound($req, $resp);
     }
 
+
+
+
     /**
      * Deletar um registro
      * @param Resq $req
@@ -159,6 +163,11 @@ class ControllerAbstract {
         endif;
         return $resp->withJson($this->args);
     }
+
+
+
+
+
 
     public function delete(Resq $req, Resp $resp) {
         $this->getTable();
@@ -205,16 +214,27 @@ class ControllerAbstract {
                 [
                     'adapter' => $this->getAdapter(),
                     'empresa' => isset($this->user['empresa'])? $this->user['empresa'] : "",
-                    'user' => $this->user
                 ]);
             $this->form = (new \ReflectionClass($this->form))->newInstanceArgs([$name, $Options]);
             if ($this->Data):
                 $this->form->setData($this->Data);
-                $this->model->exchangeArray($this->form->getData());
+                if($this->model instanceof  ModelAbstract):
+                    $this->model->exchangeArray($this->form->getData());
+                endif;
             endif;
         endif;
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function setData($Params)
+    {
+        $this->Data = $Params;
+        return $this;
+    }
+
 
     public function getAdapter() {
         return $this->adapter;

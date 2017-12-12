@@ -25,7 +25,8 @@ class Route extends RouteAbstract {
         $this->app->group('/admin', function () {
             $this->get("[/]", sprintf("%s:index", Controllers\AdminController::class))->setName('admin');
             $this->get("/setlayout", sprintf("%s:setlayout", Controllers\AdminController::class))->setName('settlayout');
-            
+            $this->get("/table", sprintf("%s:table", Controllers\AdminController::class))->setName('table');
+
             $this->group('/cidade', function () {
                 $this->get("[/]", sprintf("%s:index", Controllers\CidadeController::class))->setName('cidade');
                 $this->post("/create", sprintf("%s:create", Controllers\CidadeController::class))->setName('cidade.create');
@@ -42,6 +43,8 @@ class Route extends RouteAbstract {
         })->add($this->app->getContainer()->get('AuthMiddleware'));
 
         $this->app->group('/api', function () {
+
+            $this->map(['POST', 'GET'], "/table", sprintf("%s:table", Api\Controllers\AdminController::class))->setName('api.table');
 
             $this->group('/cidade', function () {
                 $this->map(['POST', 'GET'], "/", sprintf("%s:listar", Api\Controllers\CidadeController::class))->setName('api.cidade');

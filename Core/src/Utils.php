@@ -26,13 +26,13 @@ class Utils {
         $this->tableModel = $tableModel;
         return $this;
     }
-    
-     public function setModel($Model) {
+
+    public function setModel($Model) {
         $this->Model = $Model;
         return $this;
     }
 
-        protected function slugify($string) {
+    protected function slugify($string) {
         $slug = trim($string); // trim the string
         $slug = preg_replace('/[^a-zA-Z0-9 -]/', '', $slug); // only take alphanumerical characters, but keep the spaces and dashes too...
         $slug = str_replace(' ', '-', $slug); // replace spaces by dashes
@@ -44,7 +44,7 @@ class Utils {
         $slug = $this->slugify($SlugValue);
         $this->Select = $this->Sql->select();
         $this->Select->from($this->table)
-                ->columns([$this->id => $this->id, 'count' => new \Zend\Db\Sql\Expression('COUNT(*)')]);
+            ->columns([$this->id => $this->id, 'count' => new \Zend\Db\Sql\Expression('COUNT(*)')]);
         $this->Select->where([$SlugName => (string) $slug]);
         $this->Stmt = $this->Sql->prepareStatementForSqlObject($this->Select);
         $result = $this->Stmt->execute()->current();
@@ -62,7 +62,7 @@ class Utils {
 
     public function form_read($post) {
         //$res=str_replace ( ",", "", $post );
-        return number_format($post, 2, ",", ".");
+        return @number_format($post, 2, ",", ".");
     }
 
     public function form_w($post) {
@@ -104,7 +104,7 @@ class Utils {
                 $r = $v1;
                 break;
         }
-        $ret = number_format($r, 2, ",", ".");
+        $ret = @number_format($r, 2, ",", ".");
         return $ret;
     }
 
@@ -113,7 +113,57 @@ class Utils {
         $df = $this->Calcular(['capital' => $post['venda'], 'calculo' => $post['custo'], 'operacao' => "-"]); //valor($v2, $v1, "-");
         return $this->Calcular(['capital' => $df, 'calculo' => $c, 'operacao' => "/"]); ///($df, $c, "/");
     }
-    
+
+    public function form_conferir($v1, $v2, $op) {
+        $v1 = str_replace(".", "", $v1);
+        $v1 = str_replace(",", ".", $v1);
+        $v2 = str_replace(".", "", $v2);
+        $v2 = str_replace(",", ".", $v2);
+        switch ($op) {
+            case "!":
+                if ($v1 != $v2)
+                    $ret = TRUE;
+                else
+                    $ret = FALSE;
+                break;
+            case ">":
+                if ($v1 > $v2)
+                    $ret = TRUE;
+                else
+                    $ret = FALSE;
+                break;
+            case ">=":
+                if ($v1 >= $v2)
+                    $ret = TRUE;
+                else
+                    $ret = FALSE;
+                break;
+            case "<=":
+                if ($v1 <= $v2)
+                    $ret = TRUE;
+                else
+                    $ret = FALSE;
+                break;
+            case "<":
+                if ($v1 < $v2)
+                    $ret = TRUE;
+                else
+                    $ret = FALSE;
+                break;
+            case "=":
+                if ($v1 == $v2)
+                    $ret = TRUE;
+                else
+                    $ret = FALSE;
+                break;
+            default :
+                $ret = TRUE;
+                break;
+        }
+
+        return $ret;
+    }
+
     public function clear($Data){
         if(is_array($Data)):
             return array_filter($Data);
@@ -121,7 +171,7 @@ class Utils {
         return $Data;
     }
 
-     /**
+    /**
      * <b>Tranforma TimeStamp:</b> Transforma uma data no formato DD/MM/YY em uma data no formato TIMESTAMP!
      * @param STRING $Name = Data em (d/m/Y) ou (d/m/Y H:i:s)
      * @return STRING = $Data = Data no formato timestamp!
