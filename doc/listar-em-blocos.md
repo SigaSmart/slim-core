@@ -51,3 +51,5 @@ no arquivo de listagem voce pode montar seu bloco html ex: <br>
    ```
    <?php extract($d);?>
    ```
+   <br>
+   no inicio do seu arquivo de lista
