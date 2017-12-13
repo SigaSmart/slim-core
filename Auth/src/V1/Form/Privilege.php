@@ -9,11 +9,11 @@
 namespace SIGA\Auth\V1\Form;
 
 /**
- * Description of Role
+ * Description of Privilege
  *
  * @author caltj
  */
-class Role extends \SIGA\Core\Form\AbstractForm {
+class Privilege extends \SIGA\Core\Form\AbstractForm {
 
 	public function __construct($name = "AjaxForm", array $options = array()) {
 		parent::__construct($name, $options);
@@ -31,7 +31,7 @@ class Role extends \SIGA\Core\Form\AbstractForm {
 			],
 			'attributes' => [
 				'class' => 'form-control',
-				'placeholder' => 'Nome Descrição:'
+				'placeholder' => 'Nome\Descrição:'
 			]
 		]);
 
@@ -40,39 +40,23 @@ class Role extends \SIGA\Core\Form\AbstractForm {
 			'type' => \SIGA\Core\Form\Fields\Text::class,
 			'name' => 'alias',
 			'options' => [
-				'label' => "Alias:"
+				'label' => "Apelido:"
 			],
 			'attributes' => [
 				'class' => 'form-control',
-				'placeholder' => 'Alias:'
+				'placeholder' => 'Apelido:'
 			]
 		]);
 
-		//*********************** is_admin **************************//
+		//*********************** role **************************//
 		$this->add([
 			'type' => \SIGA\Core\Form\Fields\Select::class,
-			'name' => 'is_admin',
+			'name' => 'role',
 			'options' => [
-				'label' => "Super\Admin:",
-				'empty' => "--Selecione--",
-				'value_options'=> [
-					0=>"Não",
-					1=>"Sim",
-				]
-			],
-			'attributes' => [
-				'class' => 'form-control'
-			],
-		]);
-		//*********************** parent **************************//
-		$this->add([
-			'type' => \SIGA\Core\Form\Fields\Select::class,
-			'name' => 'parent',
-			'options' => [
-				'label' => "Herança:",
+				'label' => "Nivel de acesso:",
 				'empty' => "--Selecione--",
 				//table: Nome da tabela
-				//Colunas no formato de array ex: ['id' => 'name'] (opcional)
+				//Colunas no formato de array ex: ['id', 'name'] (opcional)
 				//Condição AND ou OR status = ? AND ou OR name = ?
 				//Os value conforme os parametros passsados na condição array [1, 'claudio']
 				'value_options'=> $this->dbValueOptions('roles')
@@ -82,6 +66,23 @@ class Role extends \SIGA\Core\Form\AbstractForm {
 			],
 		]);
 
+		//*********************** resource **************************//
+		$this->add([
+			'type' => \SIGA\Core\Form\Fields\Select::class,
+			'name' => 'resource',
+			'options' => [
+				'label' => "Modulos:",
+				'empty' => "--Selecione--",
+				//table: Nome da tabela
+				//Colunas no formato de array ex: ['id', 'name'] (opcional)
+				//Condição AND ou OR status = ? AND ou OR name = ?
+				//Os value conforme os parametros passsados na condição array [1, 'claudio']
+				'value_options'=> $this->dbValueOptions('menus')
+			],
+			'attributes' => [
+				'class' => 'form-control'
+			],
+		]);
 	}
 
 }

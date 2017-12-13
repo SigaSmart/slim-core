@@ -1,3 +1,10 @@
+<?php
+
+d($this->access->getRoles());
+d($this->access->getResources());
+//echo $this->access->isAllowed($user['role'], '1', 'listar,index')
+//	? 'allowed'
+//	: 'denied';?>
 <!-- Content Header (Page header) -->
     <?= $this->partials("top-navigation",[
         'a'=>"Admin",'b'=>"Painel",'c'=>"Dashboard", "d"=>'admin']); ?>

@@ -72,6 +72,20 @@ class Route extends RouteAbstract {
                           $this->post("/store", sprintf("%s:store", Controllers\MenuthemeController::class))->setName('menutheme.store');
                       });
 
+              $this->group('/privilegios', function () {
+               $this->get("[/]", sprintf("%s:index", Controllers\PrivilegeController::class))->setName('privilegios');
+               $this->get("/{id}/edit", sprintf("%s:edit", Controllers\PrivilegeController::class))->setName('privilegios.edit');
+               $this->post("/create", sprintf("%s:create", Controllers\PrivilegeController::class))->setName('privilegios.create');
+               $this->post("/store", sprintf("%s:store", Controllers\PrivilegeController::class))->setName('privilegios.store');
+             });
+
+                 $this->group('/modulos', function () {
+                  $this->get("[/]", sprintf("%s:index", Controllers\ResourceController::class))->setName('modulos');
+                  $this->get("/{id}/edit", sprintf("%s:edit", Controllers\ResourceController::class))->setName('modulos.edit');
+                  $this->post("/create", sprintf("%s:create", Controllers\ResourceController::class))->setName('modulos.create');
+                  $this->post("/store", sprintf("%s:store", Controllers\ResourceController::class))->setName('modulos.store');
+                });
+
         })->add($this->app->getContainer()->get('AuthMiddleware'));
 
 
@@ -100,6 +114,18 @@ class Route extends RouteAbstract {
                             $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\MenuthemeController::class))->setName('menutheme.state');
                             $this->post("/delete", sprintf("%s:delete", Api\Controllers\MenuthemeController::class))->setName('menutheme.delete');
                         });
+
+            $this->map(['POST', 'GET'], "/privilegios", sprintf("%s:listar", Api\Controllers\PrivilegeController::class))->setName('api.privilegios');
+                  $this->group('/privilegios', function () {
+                    $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\PrivilegeController::class))->setName('privilegios.state');
+                    $this->post("/delete", sprintf("%s:delete", Api\Controllers\PrivilegeController::class))->setName('privilegios.delete');
+                  });
+
+            $this->map(['POST', 'GET'], "/modulos", sprintf("%s:listar", Api\Controllers\ResourceController::class))->setName('api.modulos');
+                  $this->group('/modulos', function () {
+                    $this->post("/{id}/state", sprintf("%s:state", Api\Controllers\ResourceController::class))->setName('modulos.state');
+                    $this->post("/delete", sprintf("%s:delete", Api\Controllers\ResourceController::class))->setName('modulos.delete');
+                  });
             
         })->add($this->app->getContainer()->get('AuthMiddleware'));
     }

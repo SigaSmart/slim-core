@@ -225,6 +225,7 @@ class Views extends Helper\ViewsHelper {
         }
         $this->dataObj = array_merge($data, $this->Authenticate);
         $this->dataObj['user'] = $this->auth->user();
+
         if ($this->layout == true && file_exists(sprintf("%sTemplates/layout/%s.phtml", $this->templatePath, $this->DefaultLayout))) {
             $this->template = sprintf("%s%s.phtml", $this->templatePath, $template);
             include sprintf("%sTemplates/layout/%s.phtml", $this->templatePath, $this->DefaultLayout);

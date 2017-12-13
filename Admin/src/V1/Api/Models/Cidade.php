@@ -76,7 +76,7 @@ class Cidade extends AbstractTable {
     }
 
     protected function initFilters(Select $query) {
-        
+
     }
 
 }

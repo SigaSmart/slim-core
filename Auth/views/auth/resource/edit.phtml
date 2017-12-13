@@ -1,7 +1,7 @@
 <!-- Content Header (Page header) -->
 <?=
 $this->partials("top-navigation", [
-    'a' => "Admin", 'b' => "Acesso", 'c' => "Editar", "d" => 'role']);
+    'a' => "Admin", 'b' => "Modulos", 'c' => "Editar", "d" => 'modulos']);
 ?>
 <!-- Main content -->
 <section class="content">
@@ -10,36 +10,32 @@ $this->partials("top-navigation", [
         <!-- Custom Tabs (Pulled to the right) -->
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab-1" data-toggle="tab">Acesso</a></li>                
-                <li class="pull-right header"><i class="fa fa-th"></i> Manutenção do Acesso</li>
+                <li class="active"><a href="#tab-1" data-toggle="tab">Modulos</a></li>
+                <li class="pull-right header"><i class="fa fa-th"></i> Manutenção do Modulos</li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab-1">
                     <?= $this->form->openTag($form); ?>
                     <div class="col-md-12">
-                         <?= $this->form->openTag($form); ?>
                         <?= $this->partials('form/hidden', ['field' => $form->get('id')]) ?>
                         <?= $this->partials('form/input', ['field' => $form->get('name')]) ?>
-                        <?= $this->partials('form/input', ['field' => $form->get('alias')]) ?>
-                        <?= $this->partials('form/select', ['field' => $form->get('is_admin')]) ?>
-                        <?= $this->partials('form/select', ['field' => $form->get('parent')]) ?>
+                        <?= $this->partials('form/select', ['field' => $form->get('alias')]) ?>
 
                         <?= $this->partials('form/input', ['field' => $form->get('created_at')]) ?>
                         <?= $this->partials('form/input', ['field' => $form->get('updated_at')]) ?>
                     </div>
-                    
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
                             <?=
                             $this->partials('form/button', [
-                                'value' => 'Atualizar Dados Do Acesso',
+                                'value' => 'Atualizar Dados Do Modulos',
                                 'type' => 'submit',
                                 'class' => 'btn btn-primary btn-block btn-flat'
                             ])
                             ?>
                         </div>
                         <div class="col-sm-3">
-                            <a href=" <?= $this->route->pathFor('role'); ?>" class="btn btn-danger btn-block btn-flat"><i class="fa fa-reply-all"></i> Voltar</a>
+                            <a href=" <?= $this->route->pathFor('modulos'); ?>" class="btn btn-danger btn-block btn-flat"><i class="fa fa-reply-all"></i> Voltar</a>
                         </div>
                     </div>
                     <?= $this->form->closeTag(); ?>
@@ -47,8 +43,7 @@ $this->partials("top-navigation", [
 
                 </div>
                 <!-- /.tab-pane -->
-                 
-            </div>
+              </div>
             <!-- /.tab-content -->
         </div>
         <!-- nav-tabs-custom -->
