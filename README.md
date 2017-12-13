@@ -5,6 +5,8 @@ Documentação<br><br>
 <a href="https://github.com/SigaSmart/slim-core/blob/master/doc/Modal.md">criando uma modal</a>
 <p>
 <a href="https://github.com/SigaSmart/slim-core/blob/master/doc/Form-Attr.md">Attributos em tempo de execução</a>
+<p>
+<a href="https://github.com/SigaSmart/slim-core/blob/master/doc/listar-em-blocos.md">Listar dados em blocos</a>
 
 
 <p>
