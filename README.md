@@ -44,7 +44,7 @@ se for um atualização instale as tabela avulsas se o ainda não fez!
          'route' => $container->get('router'),
          'form' => $container['form'],
          'menu' => $container['menu'],
-         'access' => $container['acl'],
+         'access' => $container['acl'],//<-- adcione essa linha
          'utils' => $container['utils'],
          'formRow' => $container['formRow'],
          'auth' => $container->auth,
