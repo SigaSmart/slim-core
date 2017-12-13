@@ -101,7 +101,7 @@ TableOptionsInterface, DataTableInterface, RenderInterface, PaginatorInterface {
 	 * Define o numero de blocos numa linha html
 	 * ex bootstrap row> col-md-4 sera uasado o numero 3
 	 */
-    protected $setnumberColls = 3;
+    protected $numberColls = 3;
 
     /**
      * Template Map
