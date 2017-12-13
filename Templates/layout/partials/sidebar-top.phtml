@@ -30,38 +30,40 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">HEADER</li>
+            <li class="<?= $this->menu->active('admin') ?>"><a href="<?= $this->route->pathFor('admin') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <!-- Optionally, you can add icons to the links -->
-            <?php if ($this->menu->getMenus()): ?>
-                <?php $defaul = $this->menu->getMenus()['navigation']; ?>
-                <?php foreach ($defaul['default'] as $treview): ?>
-                    <?php
-                    if (isset($treview['pages'])):
-                        $submenu = [];
-                        $active = "";
-                        ?>
-                        <?php
-                        foreach ($treview['pages'] as $treview_menu):
-                            if (empty($active)):
-                                $active = $this->menu->active($treview_menu['route']);
-                            endif;
-                            $submenu[] = '<li><a href="' . $this->route->pathFor($treview_menu['route']) . '">' . $treview_menu['label'] . '</a></li>';
-                        endforeach;
-                        ?>
+			<?php $defaul = $this->menu->getMenus('admin'); ?>
+			<?php if ($defaul): ?>
+
+				<?php foreach ($defaul as $treview): ?>
+					<?php
+					if (isset($treview['pages'])):
+						$submenu = [];
+						$active = "";
+						?>
+						<?php
+						foreach ($treview['pages'] as $treview_menu):
+							if (empty($active)):
+								$active = $this->menu->active($treview_menu['route']);
+							endif;
+							$submenu[] = '<li><a href="' . $this->route->pathFor($treview_menu['route']) . '">' . $treview_menu['name'] . '</a></li>';
+						endforeach;
+						?>
                         <li class="treeview <?= $active ?>">
-                            <a href="#"><i class="<?= $treview['icone'] ?>"></i> <span> <?= $treview['label'] ?></span>
+                            <a href="#"><i class="<?= $treview['icone'] ?>"></i> <span> <?= $treview['name'] ?></span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <?= implode("", $submenu)?>
+								<?= implode("", $submenu)?>
                             </ul>
                         </li>
-                    <?php else: ?>
-                        <li class="<?= $this->menu->active($treview['route']) ?>"><a href="<?= $this->route->pathFor($treview['route']) ?>"><i class="<?= $treview['icone'] ?>"></i> <span><?= $treview['label'] ?></span></a></li>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            <?php endif; ?>
+					<?php else: ?>
+                        <li class="<?= $this->menu->active($treview['route']) ?>"><a href="<?= $this->route->pathFor($treview['route']) ?>"><i class="<?= $treview['icone'] ?>"></i> <span><?= $treview['name'] ?></span></a></li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
         </ul>
         <!-- /.sidebar-menu -->
     </section>
