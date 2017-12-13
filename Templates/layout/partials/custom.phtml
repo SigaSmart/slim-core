@@ -1,0 +1,33 @@
+<div class="zf-table-wrap  form-inline">
+    <div class="row">
+        <div class="col-xs-12">
+			<?= $this->partials('zf-table/box-top', $dataViews); ?>
+			<?= $this->partials('zf-table/box-controls', ['dataViews'=>$dataViews]); ?>
+            <!-- /.box-header -->
+            <div class="box-body table">
+                <div class="row">
+					<?php
+					extract($dataViews);
+
+					if($data):
+						$i = 0;
+						foreach ($data as $item):
+                            $i++;
+							echo $this->custom(['d'=>$item]);
+							if($numberColls<=$i):
+                             $i = 0;?>
+                            </div>
+                            <div class="row">
+                            <?php endif;
+						endforeach;
+					endif;?>
+
+                </div>
+            </div>
+            <!-- /.box-body -->
+			<?= $this->partials('zf-table/box-footer', $dataViews); ?>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<?= $this->partials('zf-table/default-params', ['dataViews'=>$dataViews]); ?>

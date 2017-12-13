@@ -1,21 +1,24 @@
 <b>ESTE EXEMPLO FOI BASEADO NA TABELA DE CIDADES</b>
 <p>
-No controller da api de seu modulo use as opcções 
+No controller da api de seu modulo use as opcções <br>
+
 ```
    $this->view->setTemplatePathCuston(sprintf("%s/%s/lista", $this->TemplatePath, $this->template));
                       
 ```
 você pode alterar o nome do arquivo que vem como padrão lista<br>
-também descomente alinha
+também descomente alinha <br>
+
 ```
 return $this->TableModel->render($this->route,'newDataTableJson');
 ```
-e mantenha comentado alinha
+e mantenha comentado alinha <br>
 
 ```
 return $this->TableModel->render($this->route);
 ```
-no arquivo de listagem voce pode montar seu bloco html ex:
+no arquivo de listagem voce pode montar seu bloco html ex: <br>
+
 ```
 <?php extract($d);?>
      <div class="col-md-4">
@@ -43,7 +46,8 @@ no arquivo de listagem voce pode montar seu bloco html ex:
      <!-- /.widget-user -->
      </div>
    ```
-   E muito IMPORTANTE não equecer de dar um
+   E muito IMPORTANTE não equecer de dar um<br>
+   
    ```
    <?php extract($d);?>
    ```
