@@ -38,7 +38,6 @@ public function setlayout(Resq $request, Resp $response , $arsg=[]){
 
     public function table(Resq $req, Resp $resp)
     {
-        die;
         $this->TemplatePath = "Admin/views";
         $this->template = 'admin/table';
         $this->form = Table::class;

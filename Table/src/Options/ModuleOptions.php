@@ -96,6 +96,13 @@ TableOptionsInterface, DataTableInterface, RenderInterface, PaginatorInterface {
      */
     protected $dataTablesMaxRows = 999;
 
+	/**
+	 * @var int
+	 * Define o numero de blocos numa linha html
+	 * ex bootstrap row> col-md-4 sera uasado o numero 3
+	 */
+    protected $setnumberColls = 3;
+
     /**
      * Template Map
      * @var array
@@ -264,6 +271,27 @@ TableOptionsInterface, DataTableInterface, RenderInterface, PaginatorInterface {
     public function setName($name) {
         $this->name = $name;
     }
+
+	/**
+	 * @return int
+	 */
+	public function getNumberColls()
+	{
+		return $this->numberColls;
+	}
+
+	/**
+	 * @param int $setnumberColls
+	 *
+	 * @return ModuleOptions
+	 */
+	public function setNumberColls($setnumberColls)
+	{
+		$this->numberColls = $setnumberColls;
+		return $this;
+	}
+
+
 
     public function setShowPagination($showPagination) {
         $this->showPagination = $showPagination;

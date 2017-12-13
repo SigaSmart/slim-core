@@ -81,7 +81,7 @@ class Row extends AbstractElement
         } elseif ($type == 'array_assc') {
             return $this->renderRowArray('assc');
         } else {
-            throw new Exception\InvalidArgumentException();
+            throw new InvalidArgumentException();
         }
 
     }
@@ -102,6 +102,9 @@ class Row extends AbstractElement
             $this->setActualRow($rowData);
             $temp = array();
             foreach ($headers as $name => $options) {
+//				foreach ($this->decorators as $decorator) {
+//					$decorator->render('');
+//				}
                 if ($type == 'assc') {
                     $temp[$name] =  $this->getTable()->getHeader($name)->getCell()->render('array');
                 } else {

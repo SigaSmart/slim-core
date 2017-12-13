@@ -20,6 +20,7 @@ class Img extends AbstractCellDecorator
      */
     protected $vars;
     protected $base;
+    protected $class;
 
     /**
      * Constructor
@@ -34,6 +35,7 @@ class Img extends AbstractCellDecorator
         }
         $this->base = $options['base'];
         $this->vars = is_array($options['vars']) ? $options['vars'] : array($options['vars']);
+        $this->class = isset($options['class']) ? $options['class'] : 'img-md';
     }
 
     /**
@@ -45,7 +47,10 @@ class Img extends AbstractCellDecorator
     public function render($context)
     {
         $values = array();
-        $values[] = $this->base;
+		$values[] = $this->class;
+		$values[] = $this->base;
+		$values[] = $this->base;
+		unset($this->vars['class']);
         foreach ($this->vars as $var) {
             $actualRow = $this->getCell()->getActualRow();
             if (is_object($actualRow)) {
@@ -53,10 +58,8 @@ class Img extends AbstractCellDecorator
             }
             $values[] = $actualRow[$var];
         }
-
-        $value = vsprintf('<img class="img-md" src="%s%s">', $values);
-
-            return $value;
+        $value = vsprintf('<img class="%s" src="%stim-slim.php?src=%s%s&w=100&h=100">', $values);
+        return $value;
 
     }
 }

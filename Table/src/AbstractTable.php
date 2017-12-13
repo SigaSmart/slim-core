@@ -218,7 +218,6 @@ abstract class AbstractTable extends AbstractElement {
         if (!$this->isTableInit()) {
             $this->initializable();
         }
-
         if ($type == 'html') {
             return $this->getRender()->renderTableAsHtml();
         } elseif ($type == 'dataTableAjaxInit') {

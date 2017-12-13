@@ -1,0 +1,12 @@
+<div class="box-footer">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2"><div class="dataTables_paginate paging_bootstrap pagination">
+				<?php if ($showPagination): ?>
+					<?php if ($paginator['pageCount'] > 1): ?>
+						<?= $this->partials('zf-table/slide-paginator', $paginator); ?>
+					<?php endif; ?>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+</div>

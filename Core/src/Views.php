@@ -34,6 +34,7 @@ class Views extends Helper\ViewsHelper {
      * @var string
      */
     protected $templatePath;
+    protected $templatePathCuston;
 
     /**
      * @var array
@@ -50,6 +51,7 @@ class Views extends Helper\ViewsHelper {
      */
     public function __construct(\Slim\Container $c, $templatePath = "", $attributes = []) {
         $this->templatePath = rtrim($templatePath, '/\\') . '/';
+        $this->templatePathCuston = rtrim($templatePath, '/\\') . '/';
         $this->attributes = $attributes;
         if ($this->attributes):
             foreach ($this->attributes as $key => $value) {
@@ -67,6 +69,14 @@ class Views extends Helper\ViewsHelper {
         }
         $this->protectedIncludeScope($template, array_merge($this->dataObj, $data, $this->auth->empresa()));
     }
+
+	public function custom($data = []) {
+    	$template = sprintf("%s.phtml", $this->templatePathCuston);
+		if (!is_file(sprintf($template))) {
+			throw new \RuntimeException("View cannot render cunton `$template` because the template does not exist");
+		}
+		$this->protectedIncludeScope($template, array_merge($this->dataObj, $data, $this->auth->empresa()));
+	}
 
     public function __get($name) {
         return $this->{$name};
@@ -164,13 +174,31 @@ class Views extends Helper\ViewsHelper {
     }
 
     /**
+     * Get the template path
+     *
+     * @return string
+     */
+    public function getTemplatePathCuston() {
+        return $this->templatePathCuston;
+    }
+
+    /**
      * Set the template path
      *
      * @param string $templatePath
      */
     public function setTemplatePath($templatePath) {
-        $this->templatePath = rtrim($templatePath, '/\\') . '/';
+        $this->templatePath = sprintf("%s%s", $this->getTemplatePath(),rtrim($templatePath, '/\\'));
     }
+
+	/**
+	 * Set the template path
+	 *
+	 * @param string $templatePath
+	 */
+	public function setTemplatePathCuston($templatePath) {
+		$this->templatePathCuston = sprintf("%s%s", $this->getTemplatePath(),rtrim($templatePath, '/\\'));
+	}
 
     public function setTerminal($terminal=true){
         $this->layout = $terminal;

@@ -52,7 +52,9 @@ class Render extends AbstractCommon {
      */
     public function renderDataTableJson() {
         $res = array();
-        $render = $this->getTable()->getRow()->renderRows('array');
+		$render = $this->getTable()->getRow()->renderRows('array_assc');
+		$tableConfig = $this->getTable()->getOptions();
+		$res = $this->getDadosRender($tableConfig);
         $res['sEcho'] = $render;
         $res['iTotalDisplayRecords'] = $this->getTable()->getSource()->getPaginator()->getTotalItemCount();
         $res['aaData'] = $render;
@@ -62,15 +64,13 @@ class Render extends AbstractCommon {
 
     public function renderNewDataTableJson() {
 
-        $render = $this->getTable()->getRow()->renderRows('array');
-
-        $res = array(
-            'draw' => $render,
-            'recordsFiltered' => $this->getTable()->getSource()->getPaginator()->getTotalItemCount(),
-            'data' => $render,
-        );
-
-        return $res;
+        $render = $this->getTable()->getRow()->renderRows('array_assc');
+		$tableConfig = $this->getTable()->getOptions();
+		$view = $this->getDadosRender($tableConfig);
+		$view['draw'] = $render;
+		$view['recordsFiltered'] = $this->getTable()->getSource()->getPaginator()->getTotalItemCount();
+		$view['data'] = $render;
+		return $this->renderer->partials('custom',  ['dataViews'=>$view]);
     }
 
     /**
@@ -84,7 +84,7 @@ class Render extends AbstractCommon {
         $view['headers'] = $renderedHeads;
         $view['attributes'] = $this->getTable()->getAttributes();
 
-        return $this->renderer->partials('data-table-init', $view);
+        return $this->renderer->partials('data-table-init',  ['dataViews'=>$view]);
     }
 
     public function renderCustom($template) {
@@ -92,37 +92,14 @@ class Render extends AbstractCommon {
         $render = '';
         $tableConfig = $this->getTable()->getOptions();
 
-        if ($tableConfig->getShowColumnFilters()) {
-            $render .= $this->renderFilters();
-        }
-
         $render .= $this->renderHead();
         $render = sprintf('<thead>%s</thead>', $render);
         $render .= $this->getTable()->getRow()->renderRows();
         $table = sprintf('<table %s>%s</table>', $this->getTable()->getAttributes(), $render);
-        $view['table'] = $table;
-        $view['paramsWrap'] = $this->renderParamsWrap();
-        $view['valuesState'] = $view['paramsWrap']['valuesState'];
-        $view['itemCountPerPage'] = $this->getTable()->getParamAdapter()->getItemCountPerPage();
-        $view['quickSearch'] = $this->getTable()->getParamAdapter()->getQuickSearch();
-        $view['name'] = $tableConfig->getName();
-        $view['paginator'] = $this->renderPaginator();
-        $view['paginator']['valuesState'] =$view['valuesState'];
-        $view['paginator']['showExportToCSV'] = $tableConfig->getShowExportToCSV();
-        $view['paginator']['showItemPerPage'] = $tableConfig->getShowItemPerPage();
-        $view['paginator']['showButtonsActions'] = $tableConfig->getShowButtonsActions();
-        $view['paginator']['valueButtonsActions'] = $tableConfig->getValueButtonsActions();
-        $view['paginator']['itemCountPerPage'] = $view['itemCountPerPage'];
-        $view['paginator']['route'] = $this->getTable()->route;
-        $view['itemCountPerPageValues'] = $tableConfig->getValuesOfItemPerPage();
-        $view['paginator']['itemCountPerPageValues'] = $view['itemCountPerPageValues'];
-        $view['showQuickSearch'] = $tableConfig->getShowQuickSearch();
-        $view['valuesOfState'] = $tableConfig->getValuesOfState();
-        $view['showPagination'] = $tableConfig->getShowPagination();
-        $view['showItemPerPage'] = $tableConfig->getShowItemPerPage();
-        $view['showExportToCSV'] = $tableConfig->getShowExportToCSV();
-
-        return $this->renderer->partials($template, $view);
+		$view = $this->getDadosRender($tableConfig);
+		$view['table'] = $table;
+		$view['template'] = $template;
+        return $this->renderer->partials($template,  ['dataViews'=>$view]);
     }
 
     /**
@@ -130,71 +107,18 @@ class Render extends AbstractCommon {
      *
      * @return string
      */
-    public function renderTableAsHtml() {
+    public function renderTableAsHtml($template="container-b3") {
         $render = '';
         $tableConfig = $this->getTable()->getOptions();
-
-        if ($tableConfig->getShowColumnFilters()) {
-            $render .= $this->renderFilters();
-        }
-
         $render .= $this->renderHead();
         $render = sprintf('<thead>%s</thead>', $render);
         $render .= $this->getTable()->getRow()->renderRows();
         $table = sprintf('<table %s>%s</table>', $this->getTable()->getAttributes(), $render);
+        $view = $this->getDadosRender($tableConfig);
         $view['table'] = $table;
-        $view['paramsWrap'] = $this->renderParamsWrap();
-        $view['valuesState'] = $view['paramsWrap']['valuesState'];
-        $view['itemCountPerPage'] = $this->getTable()->getParamAdapter()->getItemCountPerPage();
-        $view['quickSearch'] = $this->getTable()->getParamAdapter()->getQuickSearch();
-        $view['name'] = $tableConfig->getName();
-        $view['paginator'] = $this->renderPaginator();
-        $view['paginator']['valuesState'] =$view['valuesState'];
-        $view['paginator']['showExportToCSV'] = $tableConfig->getShowExportToCSV();
-        $view['paginator']['showButtonsActions'] = $tableConfig->getShowButtonsActions();
-        $view['paginator']['valueButtonsActions'] = $tableConfig->getValueButtonsActions();
-        $view['paginator']['showItemPerPage'] = $tableConfig->getShowItemPerPage();
-        $view['paginator']['itemCountPerPage'] = $view['itemCountPerPage'];
-        $view['paginator']['route'] = $this->getTable()->route;
-        $view['itemCountPerPageValues'] = $tableConfig->getValuesOfItemPerPage();
-        $view['paginator']['itemCountPerPageValues'] = $view['itemCountPerPageValues'];
-        $view['showQuickSearch'] = $tableConfig->getShowQuickSearch();
-        $view['valuesOfState'] = $tableConfig->getValuesOfState();
-        $view['showPagination'] = $tableConfig->getShowPagination();
-        $view['showItemPerPage'] = $tableConfig->getShowItemPerPage();
-        $view['showExportToCSV'] = $tableConfig->getShowExportToCSV();
-        return $this->renderer->partials("container-b3", $view);
+        return $this->renderer->partials($template, ['dataViews'=>$view]);
     }
 
-    /**
-     * Rendering filters
-     *
-     * @return string
-     */
-    public function renderFilters() {
-        $headers = $this->getTable()->getHeaders();
-        $render = '';
-        foreach ($headers as $name => $params) {
-
-            if (isset($params['filters'])) {
-                $value = $this->getTable()->getParamAdapter()->getValueOfFilter($name);
-                $id = 'zff_' . $name;
-
-                if (is_string($params['filters'])) {
-                    
-                } else {
-                    //$element = new \Zend\Form\Element\Select($id);
-                    //$element->setValueOptions($params['filters']);
-                }
-                //$element->setAttribute('class', 'filter form-control');
-                // $element->setValue($value);
-                //$render .= sprintf('<td>%s</td>', $this->getRenderer()->formRow($element));
-            } else {
-                $render .= '<td></td>';
-            }
-        }
-        return sprintf('<tr>%s</tr>', $render);
-    }
 
     /**
      * Rendering head
@@ -247,4 +171,28 @@ class Render extends AbstractCommon {
         $this->renderer = $renderer;
     }
 
+    public function getDadosRender($tableConfig){
+		$view['numberColls'] = $tableConfig->getNumberColls();
+		$view['paramsWrap'] = $this->renderParamsWrap();
+		$view['valuesState'] = $view['paramsWrap']['valuesState'];
+		$view['itemCountPerPage'] = $this->getTable()->getParamAdapter()->getItemCountPerPage();
+		$view['quickSearch'] = $this->getTable()->getParamAdapter()->getQuickSearch();
+		$view['name'] = $tableConfig->getName();
+		$view['paginator'] = $this->renderPaginator();
+		$view['valuesState'] =$view['valuesState'];
+		$view['showExportToCSV'] = $tableConfig->getShowExportToCSV();
+		$view['showButtonsActions'] = $tableConfig->getShowButtonsActions();
+		$view['valueButtonsActions'] = $tableConfig->getValueButtonsActions();
+		$view['showItemPerPage'] = $tableConfig->getShowItemPerPage();
+		$view['itemCountPerPage'] = $view['itemCountPerPage'];
+		$view['route'] = $this->getTable()->route;
+		$view['itemCountPerPageValues'] = $tableConfig->getValuesOfItemPerPage();
+		$view['itemCountPerPageValues'] = $view['itemCountPerPageValues'];
+		$view['showQuickSearch'] = $tableConfig->getShowQuickSearch();
+		$view['valuesOfState'] = $tableConfig->getValuesOfState();
+		$view['showPagination'] = $tableConfig->getShowPagination();
+		$view['showItemPerPage'] = $tableConfig->getShowItemPerPage();
+		$view['showExportToCSV'] = $tableConfig->getShowExportToCSV();
+		return $view;
+	}
 }

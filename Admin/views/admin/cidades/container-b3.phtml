@@ -1,47 +1,21 @@
 <div class="zf-table-wrap  form-inline">
-    <div class="table-header">
-    </div>
-    <div class="row ">
-        <div class="col-sm-6 pull-left">
-            <?php if($name): ?>
-                <header>
-                    <h4><?= $name ?></h4>
-                </header>
-            <?php endif;?>
-        </div>
-        <?php if ($showQuickSearch): ?>
-            <div class="dataTables_filter pull-right col-sm-3" id="dataTable_filter">
-                <label class="pull-right">Search: <input type="text" aria-controls="dataTable" class="quick-search form-control" value="<?php echo $quickSearch ?>">
-                </label>
-            </div>
-        <?php endif; ?>
-    </div>
-    <?php echo $table; ?>
-    <div class="row zf-table-body">
-        <div class="col-sm-6 text-left">
-            <?php if ($showItemPerPage): ?>
-                <label class="pull-left">
-                    <select class="itemPerPage form-control">
-                        <?php foreach ($itemCountPerPageValues as $item): ?>
-                            <?php $selected = ($item == $itemCountPerPage) ? 'selected="selected"' : '""'; ?>
-                            <option <?php echo $selected ?>><?php echo $item ?></option>
-                        <?php endforeach; ?>
-                    </select> 
-                </label> 
-           <?php endif; ?>
-           <?php if($showExportToCSV): ?>
-             <a href="#" style="margin-left: 10px;" class="export-csv">Export to CSV</a>
-           <?php endif;?>
-        </div>
-        <div class="col-sm-6 text-right">
-            <?php if ($showPagination): ?>
-                <div class="dataTables_paginate paging_bootstrap pagination">
-                    <?php echo $paginator; ?>
+    <div class="row">
+        <div class="col-xs-12">
+
+				<?= $this->partials('zf-table/box-top', $paginator); ?>
+				<?= $this->partials('box-controls', $paginator); ?>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive">
+					<?php if($data):
+						d($data);
+					endif;?>
+
                 </div>
-            <?php endif; ?>
-        </div>
-        <div class="processing">
+                <!-- /.box-body -->
+			<?= $this->partials('zf-table/box-footer', $paginator); ?>
+            </div>
+            <!-- /.box -->
         </div>
     </div>
-    <?php echo $paramsWrap; ?>
+	<?= $this->partials('default-params', $paramsWrap); ?>
 </div>
